@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/navi">
+        <file>home.png</file>
+        <file>logo.svg</file>
+        <file>tool.png</file>
+        <file>setting2.png</file>
+        <file>mysql.png</file>
+        <file>back1.png</file>
+        <file>connection.svg</file>
+        <file>sql_amber.png</file>
+        <file>sql_green.png</file>
+        <file>people.svg</file>
+        <file>quit.svg</file>
+        <file>red_circle.svg</file>
+        <file>green_circle.svg</file>
+        <file>grey_circle.svg</file>
+        <file>warning.svg</file>
+    </qresource>
+</RCC>
