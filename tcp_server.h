@@ -22,6 +22,7 @@ public:
     void Receive();
     int Send(char* message);
     void Close();
+    void Reset();
 
 signals:
     void ReceivedData(QString data);
@@ -32,6 +33,9 @@ protected:
     struct sockaddr_in serveraddr;
     int clientfd;
     char recv_content[512];
+    short last_port;
+    short last_max_connect;
+    bool is_socket_alive=true;
 };
 
 #endif // TCP_SERVER_H

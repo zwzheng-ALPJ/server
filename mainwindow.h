@@ -53,6 +53,8 @@ private:
 
     void StartSSLSocketUpdate();
 
+    bool ssl_socket_stop_flag=false;
+
     void InitSslSocket();
 
     QTimer *timer;
@@ -60,6 +62,10 @@ private:
 
     CQuitDialog *dialog = new CQuitDialog(this);
     bool quit_dialog_is_active=false;
+
+    QString monitered_device;
+
+    void ResetLiveData();
 
 private slots:
     void UpdateRunTime();
@@ -71,6 +77,14 @@ private slots:
     void UpdateDeviceList(QStringList sl);
 
     void OnQuitDialogIsActive(bool state);
+
+    void SetSSLSocketStop(bool state);
+
+    void on_MonitorDeviceChanged(QString new_device_id);
+
+    //for UI update only
+    void on_NewMMData(QString id,qint64 time,QString heartrate,QString breathe);
+    void on_NewPPGECGData(QString id,qint64 time,QString hr,QString sys,QString dia,QString rr,QString sna,QString qt,QString sdnn,QString fag,QString arr,QString lvet,QString pat,QString sis,QString pwv,QString ptt,QString pep);
 
     void on_toolButton_bind_clicked();
     void on_toolButton_listen_clicked();
@@ -88,5 +102,9 @@ private slots:
     void on_toolButton_ssl_close_clicked();
     void on_toolButton_ssl_send_clicked();
     void on_toolButton_user_save_clicked();
+    void on_listView_devices_clicked(const QModelIndex &index);
+
+signals:
+    void MonitorDeviceChanged(QString new_device_id);
 };
 #endif // MAINWINDOW_H
