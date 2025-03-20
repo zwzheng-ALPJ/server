@@ -19,6 +19,7 @@ void CMobileCommuniProtocolHandler::ProcessRecvedData(QString data,QString clien
             logger()<<"Login request: "<<data;
             QStringList sl=data.split(":");
             QString token=user.Login(sl[0],sl[1],client_ip);
+            logger()<<token;
             if(!token.isEmpty())
             {
 

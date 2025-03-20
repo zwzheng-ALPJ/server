@@ -26,14 +26,14 @@ MainWindow::MainWindow(QWidget *parent)
     //####################################################
 
     bool connected_raspi_slot=connect(&tcp_s,SIGNAL(ReceivedData(QString)),&server,SLOT(ProcessRecvedData(QString)));
-    // bool connected_mobile_slot=connect(&ssl_tcp_s,SIGNAL(ReceivedDataWithIP(QString,QString)),&mobile,SLOT(ProcessRecvedData(QString,QString)));
+    bool connected_mobile_slot=connect(&ssl_tcp_s,SIGNAL(ReceivedDataWithIP(QString,QString)),&mobile,SLOT(ProcessRecvedData(QString,QString)));
 
     logger()<<"树莓派的通信槽函数连接了吗？："<<connected_raspi_slot;
-    // logger()<<"手机的通信槽函数连接了吗？："<<connected_mobile_slot;
+    logger()<<"手机的通信槽函数连接了吗？："<<connected_mobile_slot;
     InitSocket();
-    // InitSslSocket();
+    InitSslSocket();
     QtConcurrent::run([this]{StartSocketUpdate();});
-    // QtConcurrent::run([this]{StartSSLSocketUpdate();});
+    QtConcurrent::run([this]{StartSSLSocketUpdate();});
 
 
     //####################################################
@@ -361,23 +361,26 @@ void MainWindow::on_NewMMData(QString id,qint64 time,QString heartrate,QString b
 
 void MainWindow::on_NewPPGECGData(QString id,qint64 time,QString hr,QString sys,QString dia,QString rr,QString sna,QString qt,QString sdnn,QString fag,QString arr,QString lvet,QString pat,QString sis,QString pwv,QString ptt,QString pep)
 {
-    logger()<<"trigger ecg data on ui";
-    ui->label_heart_rate_data->setText(hr);
-    ui->label_breathe_data->setText(rr);
+    if(id==monitered_device)
+    {
+        logger()<<"update ecg data on ui";
+        ui->label_heart_rate_data->setText(hr);
+        ui->label_breathe_data->setText(rr);
 
-    ui->label_sys_data->setText(sys);
-    ui->label_dia_data->setText(dia);
-    ui->label_sna_data->setText(sna);
-    ui->label_qt_data->setText(qt);
-    ui->label_sdnn_data->setText(sdnn);
-    ui->label_fag_data->setText(fag);
-    ui->label_arr_data->setText((arr=="0")?"Not Detected":"Detected!");
-    ui->label_lvet_data->setText(lvet);
-    ui->label_pat_data->setText(pat);
-    ui->label_sis_data->setText(sis);
-    ui->label_pwv_data->setText(pwv);
-    ui->label_ptt_data->setText(ptt);
-    ui->label_pep_data->setText(pep);
+        ui->label_sys_data->setText(sys);
+        ui->label_dia_data->setText(dia);
+        ui->label_sna_data->setText(sna);
+        ui->label_qt_data->setText(qt);
+        ui->label_sdnn_data->setText(sdnn);
+        ui->label_fag_data->setText(fag);
+        ui->label_arr_data->setText((arr=="0")?"Not Detected":"Detected!");
+        ui->label_lvet_data->setText(lvet);
+        ui->label_pat_data->setText(pat);
+        ui->label_sis_data->setText(sis);
+        ui->label_pwv_data->setText(pwv);
+        ui->label_ptt_data->setText(ptt);
+        ui->label_pep_data->setText(pep);
+    }
 }
 
 void MainWindow::ResetLiveData()

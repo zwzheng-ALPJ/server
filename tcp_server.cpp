@@ -3,6 +3,15 @@
 CTcpServer::CTcpServer()
 {
     sockfd=socket(AF_INET,SOCK_STREAM,0);
+
+    // counter for stress test
+    // packet_count = 0;
+    // stress_test_timer = new QTimer(this);
+    // connect(stress_test_timer, &QTimer::timeout, this, [this]() {
+    //     logger() << "Connections made in the last second:" << packet_count;
+    //     packet_count = 0;
+    // });
+    // stress_test_timer->start(1000);
 }
 
 int CTcpServer::Bind(int target_port)
@@ -66,6 +75,7 @@ void CTcpServer::Receive()
         }
         //logger()<<"Socket received data: "<<acc_data;
 
+        // packet_count++;
         emit ReceivedData(acc_data);
         emit ReceivedDataWithIP(acc_data,client_ip);
     }

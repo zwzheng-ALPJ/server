@@ -10,6 +10,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include <QTimer>
+
 class CTcpServer : public QObject
 {
     Q_OBJECT
@@ -36,6 +38,11 @@ protected:
     short last_port;
     short last_max_connect;
     bool is_socket_alive=true;
+
+
+    // timer for stress test
+    int packet_count;
+    QTimer* stress_test_timer;
 };
 
 #endif // TCP_SERVER_H

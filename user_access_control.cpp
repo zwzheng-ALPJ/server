@@ -107,7 +107,7 @@ QString CUserAccessControl::Login(QString username,QString password,QString clie
 
         token_seed.append(QString::number(randnum));
 
-        logger()<<token_seed;
+        //logger()<<token_seed;
 
         QByteArray ba=token_seed.toUtf8();
         QByteArray token_ba = QCryptographicHash::hash(ba, QCryptographicHash::Md5);
